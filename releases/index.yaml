@@ -1,0 +1,21 @@
+apiVersion: v1
+entries:
+  hmse-run:
+  - apiVersion: v2
+    appVersion: 0.0.4
+    created: "2023-06-05T11:28:50.707396543+02:00"
+    dependencies:
+    - name: airflow
+      repository: https://airflow-helm.github.io/charts
+      version: 8.7.0
+    - name: hmseWebserver
+      repository: file://charts/hmseWebserver
+      version: 0.1.0
+    description: Umbrella chart for running a HMSE workflow
+    digest: 6684831efa7762f2ec3a566945f8a50bdb75e917ae10a3fb0aaabb8485693997
+    name: hmse-run
+    type: application
+    urls:
+    - hmse-run-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-06-05T11:28:50.701406236+02:00"
