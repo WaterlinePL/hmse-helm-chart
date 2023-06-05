@@ -1,4 +1,4 @@
 .idea/
 *.tgz
-!charts/hmse-run-*.tgz
+!charts/hmse-*.tgz
 test_run.yaml
