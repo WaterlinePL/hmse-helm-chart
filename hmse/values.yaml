@@ -1,0 +1,57 @@
+# Airflow image with DAGS
+airflow-image-repo: &airflow-image-repo watermodelling/airflow
+airflow-image-tag: &airflow-image-tag 2.5.0-v0.0.3
+
+# Change these to run a different workflow
+hmse-webserver-image: &hmse-webserver-image watermodelling/hmse-k8s:0.0.4
+
+
+######################################################
+####   Airflow config  ####
+######################################################
+airflow:
+  airflow:
+    image:
+      repository: *airflow-image-repo
+      tag: *airflow-image-tag
+    config:
+      AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth"
+    users:
+    - username: hmse-user-test-123
+      password: admin
+      role: Admin
+      email: admin@example.com
+      firstName: admin
+      lastName: admin
+  #  usersTemplates:
+  #    AIRFLOW_USER_PASSWORD:
+  #        kind: secret    # TODO
+  #        name: my-secret # TODO
+  #        key: password   # TODO
+    variables:
+      - key: simulation_pvc
+        value: simulation-pvc
+      - key: simulation_minio_secret
+        value: s3-secret
+
+
+hmseWebserver:
+  image: *hmse-webserver-image
+  httpPort: 8080
+  ingress:
+    prefix: ""
+
+  s3:
+    region: ""      # FILL IN (required)
+    bucket: ""      # FILL IN (required)
+    secret:
+      name: s3-secret
+      accessKey: ""   # FILL IN (required)
+      secretKey: ""   # FILL IN (required)
+      # FILL IN if using other service than AWS S3; endpoint must use https (https:// prefix should be omitted in this value)
+      # e.g. for https://example.com the value for endpoint should be "example.com"
+      endpoint: ""
+  simulationPvc:
+    name: simulation-pvc
+    size: 2Gi
+  airflowSecretName: airflow-secret
