@@ -1,3 +1,4 @@
 .idea/
 *.tgz
+!releases/hmse-run-*.tgz
 test_run.yaml
