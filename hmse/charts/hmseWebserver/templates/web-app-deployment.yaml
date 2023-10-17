@@ -23,6 +23,8 @@ spec:
           value: {{ .Values.ingress.prefix }}
         - name: MINIO_REGION
           value: {{ .Values.s3.region }}
+        - name: S3_TYPE
+          value: {{ .Values.s3.interface }}
         - name: HMSE_MINIO_ROOT_BUCKET
           value: {{ .Values.s3.bucket }}
         - name: MINIO_SECRET_KEY
@@ -57,5 +59,3 @@ spec:
               optional: false
         - name: AIRFLOW_API_ENDPOINT
           value: {{ printf "%s-web.%s.svc.cluster.local:8080" (.Release.Name) (.Release.Namespace) }}/api/v1
-        - name: AIRFLOW_SIMULATION_DAG # FIXME: hardcode?
-          value: hmse_simulation

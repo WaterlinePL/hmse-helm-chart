@@ -1,9 +1,9 @@
 # Airflow image with DAGS
 airflow-image-repo: &airflow-image-repo watermodelling/airflow
-airflow-image-tag: &airflow-image-tag 2.5.0-v0.0.3
+airflow-image-tag: &airflow-image-tag 2.5.0-p3.7-1.0.0
 
 # Change these to run a different workflow
-hmse-webserver-image: &hmse-webserver-image watermodelling/hmse-k8s:0.0.4
+hmse-webserver-image: &hmse-webserver-image watermodelling/hmse-k8s:1.0.0
 
 
 ######################################################
@@ -17,22 +17,19 @@ airflow:
     config:
       AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth"
     users:
-    - username: hmse-user-test-123
-      password: admin
+    - username: admin
+      password: admin   # CHANGE IN NON-PRIVATE NETWORKS
       role: Admin
       email: admin@example.com
       firstName: admin
       lastName: admin
-  #  usersTemplates:
-  #    AIRFLOW_USER_PASSWORD:
-  #        kind: secret    # TODO
-  #        name: my-secret # TODO
-  #        key: password   # TODO
     variables:
       - key: simulation_pvc
         value: simulation-pvc
       - key: simulation_minio_secret
         value: s3-secret
+      - key: hmse_version
+        value: 1.0.0
 
 
 hmseWebserver:
@@ -44,6 +41,7 @@ hmseWebserver:
   s3:
     region: ""      # FILL IN (required)
     bucket: ""      # FILL IN (required)
+    interface: "MINIO"  # CHANGE IF NECESSARY (MINIO/S3), dependent on S3 interface type
     secret:
       name: s3-secret
       accessKey: ""   # FILL IN (required)

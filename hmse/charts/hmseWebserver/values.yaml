@@ -1,4 +1,4 @@
-image: watermodelling/hmse-k8s:0.0.3
+image: watermodelling/hmse-k8s:1.0.0
 httpPort: 8080
 
 
@@ -15,8 +15,14 @@ simulationPvc:
 s3:
   secret:
     name: s3-secret
+    accessKey: ""   # FILL IN (required)
+    secretKey: ""   # FILL IN (required)
+    # FILL IN if using other service than AWS S3; endpoint must use https (https:// prefix should be omitted in this value)
+    # e.g. for https://example.com the value for endpoint should be "example.com"
+    endpoint: ""
   region: us-east-1
-  bucket: "hmse-k8s-test"  # FILL IN
+  bucket: ""  # FILL IN
+  interface: "MINIO"  # CHANGE IF NECESSARY (MINIO/S3), dependent on S3 interface type
 
 ingress:
   # Add if using ingress with prefix for exposing the webserver

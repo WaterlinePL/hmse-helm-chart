@@ -2,8 +2,8 @@ apiVersion: v2
 name: hmse
 description: Umbrella chart for running a HMSE workflow
 type: application
-version: 0.1.0
-appVersion: "0.0.4"
+version: 1.0.0
+appVersion: "1.0.0"
 
 dependencies:
   - name: airflow
@@ -11,5 +11,5 @@ dependencies:
     version: 8.7.0
   - name: hmseWebserver
     repository: file://charts/hmseWebserver
-    version: 0.1.0
+    version: 1.0.0
 
