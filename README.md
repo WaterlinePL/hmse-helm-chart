@@ -59,13 +59,24 @@ For more configuration options reference values.yaml files present in charts and
 [here](https://github.com/WaterlinePL/hmse-helm-chart/blob/main/hmse/).
 
 #### 3. Deploy HMSE chart
-Deploy HMSE chart in the k8s cluster:
-
+Add repo with HMSE chart to helm:
 ```
-cd helm
-helm install hmse hmse -n <desired namespace with S3 secret>
+helm repo add hmse-repo https://waterlinepl.github.io/hmse-helm-chart/charts/
+```
+
+Deploy HMSE chart in the k8s cluster:
+```
+helm install hmse hmse-repo/hmse -n <desired namespace> --values <your Values.yaml file>
 ```
 
 **Important!**
 Note that this setup is simplified, as Airflow should be configured with secrets for its components and may not be safe 
 to use in a production environment. 
+
+## Creating new chart version
+Edit Chart.yaml in `hmse` directory and update chart version. Then execute commands:
+```
+helm package hmse -d charts/
+helm repo index charts/
+```
+After pushing to main branch the new version will be deployed automatically.
