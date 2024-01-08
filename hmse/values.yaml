@@ -30,6 +30,8 @@ airflow:
         value: s3-secret
       - key: hmse_version
         value: 1.0.0
+      - key: hmse_namespace
+        value: {{ .Release.Namespace }}
 
 
 hmseWebserver:
